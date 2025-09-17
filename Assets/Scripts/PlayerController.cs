@@ -1,11 +1,17 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
     //--> variables de componentes
     Collider2D _collider2D;
     Rigidbody2D _rigidbody;
+
+    //  --Groun sensor antiguo--
+    //GroundSensor _groundSensor;
+    public Transform _playerSpawn;
 
     //--> variables de input
     //--> botones
@@ -15,7 +21,10 @@ public class PlayerController : MonoBehaviour
     //--> vector de movimiento
     private Vector2 _moveInput;
     [SerializeField] private float _playerSpeed = 4.5f;
-    [SerializeField] private float _jumpForce = 5;
+    [SerializeField] private float _jumpHeight = 2;
+
+    [SerializeField] private Transform _sensorPosition;
+    [SerializeField] private Vector2 _sensorSize = new Vector2(0.5f, 0.5f);
 
     void Awake()
     {
@@ -25,18 +34,22 @@ public class PlayerController : MonoBehaviour
         _moveAction = InputSystem.actions["Move"];
         _jumpAction = InputSystem.actions["Jump"];
         _attackAction = InputSystem.actions["Attack"];
-
         //_jumpAction = InputSystem.actions.FindAction("jump"); --> otra manera de bindear el input a la variable
+
+        //             ---Ground sensor antiguo---
+        //_groundSensor = GetComponentInChildren<GroundSensor>();
     }
 
     void Start()
-    {}
+    {
+        gameObject.transform.position = _playerSpawn.transform.position;
+    }
 
     void Update()
     {
         //--> asignamos al vector de movimiento el valor del input (_moveAction)
         _moveInput = _moveAction.ReadValue<Vector2>();
-        
+
         //--> debug para ver los valores del input
         Debug.Log(_moveInput);
 
@@ -46,7 +59,7 @@ public class PlayerController : MonoBehaviour
         //transform.position = transform.position + new Vector3(_moveInput.x, 0, 0) * _playerSpeed * Time.deltaTime;
 
 
-        if (_jumpAction.WasPressedThisFrame())
+        if (_jumpAction.WasPressedThisFrame() && IsGrounded())
         //WasPressedThisFrame, hace que nada mas pulsar el botón se cumpla esta condición.
         {
             Jump();
@@ -60,6 +73,34 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        _rigidbody.AddForce(Vector2.up * Mathf.Sqrt(_jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
+        //--> formula del mathf =(altura de salto * -2 * gravedad)
+        //--> forma sencilla = _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse); siendo jump force la fuerza de salto designada (variable)
+    }
+
+    //ground sensor pero BIEN
+    bool IsGrounded()
+    {
+        //el valor devuelve un array de objetos así que la variable debe ser de tipo array
+        Collider2D[] ground = Physics2D.OverlapBoxAll(_sensorPosition.position, _sensorSize, 0);
+        //el array almacena los objetos que entren en este collider
+
+        foreach (Collider2D item in ground)
+        //item es nombre de variable, puede ser cualquiera
+        {
+            if (item.gameObject.layer == 3)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //para dibujar el collider que creamos en IsGrounded
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(_sensorPosition.position, _sensorSize);
     }
 }
