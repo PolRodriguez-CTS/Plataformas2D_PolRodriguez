@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     //--> variables de componentes
     Collider2D _collider2D;
     Rigidbody2D _rigidbody;
+    Animator _animator;
+
 
     //  --Groun sensor antiguo--
     //GroundSensor _groundSensor;
@@ -23,12 +25,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerSpeed = 4.5f;
     [SerializeField] private float _jumpHeight = 2;
 
+    private bool _alreadyLanded = true;
+
     [SerializeField] private Transform _sensorPosition;
     [SerializeField] private Vector2 _sensorSize = new Vector2(0.5f, 0.5f);
 
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
 
         //--> para bindear el input a la variable
         _moveAction = InputSystem.actions["Move"];
@@ -58,12 +63,19 @@ public class PlayerController : MonoBehaviour
 
         //transform.position = transform.position + new Vector3(_moveInput.x, 0, 0) * _playerSpeed * Time.deltaTime;
 
-
         if (_jumpAction.WasPressedThisFrame() && IsGrounded())
         //WasPressedThisFrame, hace que nada mas pulsar el botón se cumpla esta condición.
         {
             Jump();
         }
+
+
+
+        //función que controla cosas como rotación, animaciones, etc del movimiento
+        Movement();
+
+        _animator.SetBool("IsJumping", !IsGrounded());
+
     }
 
     void FixedUpdate()
@@ -71,11 +83,34 @@ public class PlayerController : MonoBehaviour
         _rigidbody.linearVelocity = new Vector2(_moveInput.x * _playerSpeed, _rigidbody.linearVelocity.y);
     }
 
+    void Movement()
+    {
+
+        if (_moveInput.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            _animator.SetBool("IsRunning", true);
+
+        }
+
+        else if (_moveInput.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            _animator.SetBool("IsRunning", true);
+        }
+
+        else
+        {
+            _animator.SetBool("IsRunning", false);
+        }
+    }
+
     void Jump()
     {
         _rigidbody.AddForce(Vector2.up * Mathf.Sqrt(_jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
         //--> formula del mathf =(altura de salto * -2 * gravedad)
         //--> forma sencilla = _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse); siendo jump force la fuerza de salto designada (variable)
+
     }
 
     //ground sensor pero BIEN
@@ -93,7 +128,6 @@ public class PlayerController : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
 
