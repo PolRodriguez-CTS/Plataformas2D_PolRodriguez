@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _attackAction;
+    private InputAction _interactAction;
+
     //--> vector de movimiento
     private Vector2 _moveInput;
     [SerializeField] private float _playerSpeed = 4.5f;
@@ -30,6 +32,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _sensorPosition;
     [SerializeField] private Vector2 _sensorSize = new Vector2(0.5f, 0.5f);
 
+    [SerializeField] private Vector2 _interactionZone = new Vector2(1, 1);
+
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
         _moveAction = InputSystem.actions["Move"];
         _jumpAction = InputSystem.actions["Jump"];
         _attackAction = InputSystem.actions["Attack"];
+        _interactAction = InputSystem.actions["Interact"];
         //_jumpAction = InputSystem.actions.FindAction("jump"); --> otra manera de bindear el input a la variable
 
         //             ---Ground sensor antiguo---
@@ -56,7 +61,7 @@ public class PlayerController : MonoBehaviour
         _moveInput = _moveAction.ReadValue<Vector2>();
 
         //--> debug para ver los valores del input
-        Debug.Log(_moveInput);
+        //Debug.Log(_moveInput);
 
         //--> al transform del personaje le sumamos un un vector que equivale a el componente x del vector de movimiento * velocidad del jugador * Time.deltatime
         // Time.deltatime --> el intervalo en segundos entre el último frame hasta el actual, de esta manera la velocidad no varía dependiendo de los fps a los que se ejecuta el juego.
@@ -69,6 +74,10 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
+        if (_interactAction.WasPerformedThisFrame())
+        {
+            Interact();
+        }
 
 
         //función que controla cosas como rotación, animaciones, etc del movimiento
@@ -113,6 +122,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void Interact()
+    {
+        //Debug.Log("Haciendo cosas");
+        Collider2D[] interactables = Physics2D.OverlapBoxAll(transform.position, _interactionZone, 0);
+        foreach (Collider2D item in interactables)
+        {
+            if (item.gameObject.tag == "Star")
+            {
+                Debug.Log("tocando estrella");
+            }
+        }
+    }
+
     //ground sensor pero BIEN
     bool IsGrounded()
     {
@@ -136,5 +158,14 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_sensorPosition.position, _sensorSize);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, _interactionZone);
     }
+    
+
+
+    //_____________Por hacer 2º entrega, animacion de ataque quieto y ataque en movimiento, para el ataque estático hacer que no pueda moverse.________________________________
+
+
 }
