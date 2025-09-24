@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     Collider2D _collider2D;
     Rigidbody2D _rigidbody;
     Animator _animator;
+    //private Mimik _mimik;
 
     //  --Groun sensor antiguo--
     //GroundSensor _groundSensor;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerSpeed = 4.5f;
     [SerializeField] private float _jumpHeight = 2;
 
-    private bool _alreadyLanded = true;
+    //private bool _alreadyLanded = true;
 
     [SerializeField] private Transform _sensorPosition;
     [SerializeField] private Vector2 _sensorSize = new Vector2(0.5f, 0.5f);
@@ -34,11 +35,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _interatcPosition;
     [SerializeField] private Vector2 _interactionZone = new Vector2(1, 1);
 
+    //----- Vida -------
+
+    private float _playerHealth = 3;
+
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-
         //--> para bindear el input a la variable
         _moveAction = InputSystem.actions["Move"];
         _jumpAction = InputSystem.actions["Jump"];
@@ -57,6 +61,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        /*if (_playerHealth == 0)
+        {
+            Destroy(gameObject);
+        }*/
+
         //--> asignamos al vector de movimiento el valor del input (_moveAction)
         _moveInput = _moveAction.ReadValue<Vector2>();
 
@@ -84,7 +93,6 @@ public class PlayerController : MonoBehaviour
         Movement();
 
         _animator.SetBool("IsJumping", !IsGrounded());
-
     }
 
     void FixedUpdate()
@@ -131,12 +139,12 @@ public class PlayerController : MonoBehaviour
             if (item.gameObject.tag == "Star")
             {
                 Star starScript = item.gameObject.GetComponent<Star>();
-                
+
                 //para comprobar que se ha accedido correctamente (que la variable sea diferente de nulo) y evitar que en el caso que no, no se ejecuten las lineas posteriores
-                if(starScript != null)
+                if (starScript != null)
                 {
                     starScript.Interaction();
-                }  
+                }
             }
         }
     }
@@ -168,10 +176,29 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(_interatcPosition.position, _interactionZone);
     }
-    
+
+
 
     //_____________Por hacer 2º entrega, animacion de ataque quieto y ataque en movimiento, para el ataque estático hacer que no pueda moverse.________________________________
+    //Interacciones con el enemigo
 
+    /*void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Mimik _mimikScript = FindWithTag("Enemy");
+            _playerHealth -= 
+        }
+    }*/
 
+    public void TakeDamage(float damage)
+    {
+        _playerHealth -= damage;
+        Debug.Log(_playerHealth);
+    }
 
+    void Death()
+    {
+           
+    }
 }
