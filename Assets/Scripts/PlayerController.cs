@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D _rigidbody;
     Animator _animator;
 
-
     //  --Groun sensor antiguo--
     //GroundSensor _groundSensor;
     public Transform _playerSpawn;
@@ -32,6 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _sensorPosition;
     [SerializeField] private Vector2 _sensorSize = new Vector2(0.5f, 0.5f);
 
+    [SerializeField] private Transform _interatcPosition;
     [SerializeField] private Vector2 _interactionZone = new Vector2(1, 1);
 
     void Awake()
@@ -130,7 +130,13 @@ public class PlayerController : MonoBehaviour
         {
             if (item.gameObject.tag == "Star")
             {
-                Debug.Log("tocando estrella");
+                Star starScript = item.gameObject.GetComponent<Star>();
+                
+                //para comprobar que se ha accedido correctamente (que la variable sea diferente de nulo) y evitar que en el caso que no, no se ejecuten las lineas posteriores
+                if(starScript != null)
+                {
+                    starScript.Interaction();
+                }  
             }
         }
     }
@@ -160,12 +166,12 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(_sensorPosition.position, _sensorSize);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position, _interactionZone);
+        Gizmos.DrawWireCube(_interatcPosition.position, _interactionZone);
     }
     
 
-
     //_____________Por hacer 2º entrega, animacion de ataque quieto y ataque en movimiento, para el ataque estático hacer que no pueda moverse.________________________________
+
 
 
 }
