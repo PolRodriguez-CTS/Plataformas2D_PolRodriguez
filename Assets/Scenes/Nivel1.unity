@@ -12932,7 +12932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1602093002}
-  _backgroundVelocity: {x: 0.09, y: 0}
+  _backgroundVelocity: {x: 0.1, y: 0}
   _offset: {x: 0, y: 0}
   _playerSpeedOffset: 0.2
 --- !u!1 &1602093002
@@ -13432,7 +13432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1602093002}
-  _backgroundVelocity: {x: 0, y: 0}
+  _backgroundVelocity: {x: 0.04, y: 0}
   _offset: {x: 0, y: 0}
   _playerSpeedOffset: 0.2
 --- !u!1 &1955616775
@@ -13536,7 +13536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1602093002}
-  _backgroundVelocity: {x: 0, y: 0}
+  _backgroundVelocity: {x: 0.06, y: 0}
   _offset: {x: 0, y: 0}
   _playerSpeedOffset: 0.2
 --- !u!1 &1973065058
