@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -36,8 +37,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 _interactionZone = new Vector2(1, 1);
 
     //----- Vida -------
-
-    private float _playerHealth = 3;
+    [SerializeField] private float _maxHealth = 10;
+    [SerializeField] private float _currentHealth;
 
     void Awake()
     {
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gameObject.transform.position = _playerSpawn.transform.position;
+        _currentHealth = _maxHealth;
     }
 
     void Update()
@@ -193,12 +195,15 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        _playerHealth -= damage;
-        Debug.Log(_playerHealth);
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
+        {
+            Death();
+        }
     }
 
     void Death()
     {
-           
+        
     }
 }

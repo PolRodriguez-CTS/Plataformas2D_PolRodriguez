@@ -1021,6 +1021,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PauseMap",
+            "id": "9b0e7749-5b49-4359-891b-ab9b1b3a0749",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "145fb5f4-a53f-4665-a23a-c9ac60a48fb2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "647ccdf5-495f-4b80-8c4d-d45f10b1a5ec",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
