@@ -13,11 +13,15 @@ public class Mimik : MonoBehaviour
     [SerializeField] private Vector2 _attackHitbox = new Vector2(1,1);
 
     public Vector3[] limites;
-    private int _mimikDamage = 1;
+    //private int _mimikDamage = 1;
 
     private PlayerController _playerController;
 
-    void Start()
+// pruebaaaaaaaaaaaaaaaaaaaaaaaaaa
+    bool isGrounded_right;
+        bool isGrounded_left;
+//pruebaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -45,16 +49,47 @@ public class Mimik : MonoBehaviour
 
     bool IsGrounded()
     {
-        Collider2D[] ground = Physics2D.OverlapBoxAll(_edgeSensorPosition.position + limites[0], _edgeSensorSize, 0);
 
-        foreach (Collider2D item in ground)
+        Collider2D[] ground_right = Physics2D.OverlapBoxAll(_edgeSensorPosition.position + limites[0], _edgeSensorSize, 0);
+
+        foreach (Collider2D item in ground_right)
         {
             if (item.gameObject.layer == 3)
             {
-                return true;
+                //return true;
+                isGrounded_right = true;
+            }
+            else
+            {
+                return false;
             }
         }
-        return false;
+
+
+        Collider2D[] ground_left = Physics2D.OverlapBoxAll(_edgeSensorPosition.position + limites[0], _edgeSensorSize, 0);
+
+        foreach (Collider2D item in ground_left)
+        {
+            if (item.gameObject.layer == 3)
+            {
+                //return true;
+                isGrounded_left = true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        if (isGrounded_right && isGrounded_left)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
     }
 
     bool PlayerDetection()
