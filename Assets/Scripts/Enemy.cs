@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D _rigidbody;
     [SerializeField] private float _mimikSpeed = 1.5f;
     private int _mimikDirection = 1;
-    [SerializeField] private int _mimikDamage = 1;
+    [SerializeField] private float _mimikDamage = 1;
 
     [SerializeField] private Transform _enemyAttackHitbox;
     [SerializeField] private Vector2 _attackHitbox = new Vector2(1, 1);
@@ -34,6 +34,8 @@ public class Enemy : MonoBehaviour
             if (collision.gameObject.tag == "Player")
             {
                 Debug.Log("te muerdo");
+                PlayerController _playerScript = collision.gameObject.GetComponent<PlayerController>();
+                _playerScript.TakeDamage(_mimikDamage);
             }
         }
     }

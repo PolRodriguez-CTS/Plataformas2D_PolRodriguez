@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour
         }
     }*/
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
         float health = _currentHealth / _maxHealth;
