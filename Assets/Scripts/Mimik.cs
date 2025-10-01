@@ -13,7 +13,7 @@ public class Mimik : MonoBehaviour
     [SerializeField] private Vector2 _attackHitbox = new Vector2(1,1);
 
     public Vector3[] limites;
-    private float _mimikDamage = 1;
+    private int _mimikDamage = 1;
 
     private PlayerController _playerController;
 

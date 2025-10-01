@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     //--> variable estatica, es global se puede acceder desde cualquier script y compartida entre todas las copias
     //get; private set; (con esto hacemos que cualquiera pueda acceder pero que solo se pueda modificar desde aquí)
     public static GameManager instance { get; private set; }
-    [SerializeField] private GameObject _pauseCanvas;
+
     [SerializeField] private InputActionAsset playerInputs;
     private InputAction _pauseInput;
     int _stars = 0;
@@ -52,16 +52,19 @@ public class GameManager : MonoBehaviour
         if (_isPaused)
         {
             Time.timeScale = 1;
-            _pauseCanvas.SetActive(false);
+            GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._pauseCanvas, false);
             playerInputs.FindActionMap("Player").Enable();
             _isPaused = false;
         }
         else
         {
             Time.timeScale = 0;
-            _pauseCanvas.SetActive(true);
+            GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._pauseCanvas, true);
+            GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._optionsCanvas, false);
             playerInputs.FindActionMap("Player").Disable();
             _isPaused = true;
         }
     }
+
+    
 }
