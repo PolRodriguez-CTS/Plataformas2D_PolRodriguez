@@ -17,7 +17,6 @@ public class Mimik : MonoBehaviour
 
     private PlayerController _playerController;
 
-    
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -44,7 +43,6 @@ public class Mimik : MonoBehaviour
         Gizmos.DrawWireCube(_enemyAttackHitbox.position, _attackHitbox);
     }
 
-
     bool IsGrounded()
     {
         Collider2D[] ground = Physics2D.OverlapBoxAll(_edgeSensorPosition.position + limites[0], _edgeSensorSize, 0);
@@ -67,8 +65,8 @@ public class Mimik : MonoBehaviour
         {
             if(item.gameObject.tag == "Player")
             {
-                PlayerController _playerScript = item.gameObject.GetComponent<PlayerController>();
-                _playerScript.TakeDamage(_mimikDamage);
+                /*PlayerController _playerScript = item.gameObject.GetComponent<PlayerController>();
+                _playerScript.TakeDamage(_mimikDamage);*/
                 return true;
             }
         }

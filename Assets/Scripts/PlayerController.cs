@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 _interactionZone = new Vector2(1, 1);
 
     //----- Vida -------
-    [SerializeField] private int _maxHealth = 10;
-    [SerializeField] private int _currentHealth;
+    [SerializeField] private float _maxHealth = 10;
+    [SerializeField] private float _currentHealth;
 
     void Awake()
     {
@@ -196,6 +196,9 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
+        float health = _currentHealth / _maxHealth;
+        Debug.Log(health);
+
         GUIManager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
         if (_currentHealth <= 0)
         {
@@ -205,6 +208,6 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
-        
+        Debug.Log("Muerto");
     }
 }

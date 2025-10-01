@@ -7,10 +7,11 @@ public class GameManager : MonoBehaviour
     //get; private set; (con esto hacemos que cualquiera pueda acceder pero que solo se pueda modificar desde aquí)
     public static GameManager instance { get; private set; }
 
-    [SerializeField] private InputActionAsset playerInputs;
+    public bool _isPaused = false;
+    public InputActionAsset playerInputs;
     private InputAction _pauseInput;
     int _stars = 0;
-    private bool _isPaused = false;
+    
 
     void Awake()
     {

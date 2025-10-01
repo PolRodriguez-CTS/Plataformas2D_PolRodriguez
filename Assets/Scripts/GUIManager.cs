@@ -5,7 +5,7 @@ public class GUIManager : MonoBehaviour
     public static GUIManager Instance;
     public GameObject _pauseCanvas;
     public GameObject _optionsCanvas;
-    private Image _healthBar;
+    [SerializeField] private Image _healthBar;
 
     void Awake()
     {
@@ -35,7 +35,7 @@ public class GUIManager : MonoBehaviour
         canvas.SetActive(status);
     }
 
-    public void UpdateHealthBar(int _currentHealth, int _maxHealth)
+    public void UpdateHealthBar(float _currentHealth, float _maxHealth)
     {
         _healthBar.fillAmount = _currentHealth / _maxHealth;
     }
