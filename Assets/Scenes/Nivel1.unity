@@ -900,6 +900,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mimikSpeed: 1.5
   _mimikDamage: 1
+  _enemyAttackHitbox: {fileID: 1838454014}
+  _attackHitbox: {x: 1, y: 1}
 --- !u!61 &740233153
 BoxCollider2D:
   m_ObjectHideFlags: 0
