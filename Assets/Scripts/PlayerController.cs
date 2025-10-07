@@ -96,7 +96,9 @@ public class PlayerController : MonoBehaviour
         if (_attackAction.WasPressedThisFrame())
         {
             Debug.Log("Ataque");
-            Attack();
+            _animator.SetTrigger("hasAttacked");
+            //Attack();
+            //Para hacer que el ataque desactive los inputs del jugador, booleana de control que diga si está atacando o no. al llamar la función es true, se inicia una corrutina que tiene quita los inputs, y solo los activa cuando la booleana devuelve false (cuando acaba de atacar)
         }
 
         //función que controla cosas como rotación, animaciones, etc del movimiento
