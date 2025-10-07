@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Star
   - Enemy
+  - Edge
   layers:
   - Default
   - TransparentFX

@@ -38,5 +38,11 @@ public class Enemy : MonoBehaviour
                 _playerScript.TakeDamage(_mimikDamage);
             }
         }
+
+        if (collision.gameObject.tag == "Edge")
+        {
+            Debug.Log("Borde detectado");
+            _mimikDirection *= -1;
+        }
     }
 }

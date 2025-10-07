@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _interatcPosition;
     [SerializeField] private Vector2 _interactionZone = new Vector2(1, 1);
 
+    [SerializeField] private Transform _attackPosition;
+    [SerializeField] private Vector2 _attackHitboxSize = new Vector2(1, 1);
+
     //----- Vida -------
     [SerializeField] private float _maxHealth = 10;
     [SerializeField] private float _currentHealth;
@@ -90,9 +93,14 @@ public class PlayerController : MonoBehaviour
             Interact();
         }
 
+        if (_attackAction.WasPressedThisFrame())
+        {
+            Debug.Log("Ataque");
+            Attack();
+        }
 
         //función que controla cosas como rotación, animaciones, etc del movimiento
-        Movement();
+            Movement();
 
         _animator.SetBool("IsJumping", !IsGrounded());
     }
@@ -151,6 +159,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+        Collider2D[] enemies = Physics2D.OverlapBoxAll(_attackPosition.position, _attackHitboxSize, 0);
+        foreach (Collider2D enemy in enemies)
+        {
+            if (enemy.gameObject.tag == "Enemy")
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+    }
+
     //ground sensor pero BIEN
     bool IsGrounded()
     {
@@ -177,6 +197,9 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(_interatcPosition.position, _interactionZone);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(_attackPosition.position, _attackHitboxSize);
     }
 
 

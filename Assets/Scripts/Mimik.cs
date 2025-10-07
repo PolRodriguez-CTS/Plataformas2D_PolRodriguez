@@ -12,15 +12,12 @@ public class Mimik : MonoBehaviour
     [SerializeField] private Transform _enemyAttackHitbox;
     [SerializeField] private Vector2 _attackHitbox = new Vector2(1,1);
 
+    private bool _isNearEdge = false;
     public Vector3[] limites;
     //private int _mimikDamage = 1;
 
     private PlayerController _playerController;
 
-// pruebaaaaaaaaaaaaaaaaaaaaaaaaaa
-    bool isGrounded_right;
-        bool isGrounded_left;
-//pruebaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -28,7 +25,7 @@ public class Mimik : MonoBehaviour
 
     void Update()
     {
-        if(!IsGrounded() || PlayerDetection())
+        if(_isNearEdge || PlayerDetection())
         {
             _mimikDirection *= -1;
         }
@@ -37,32 +34,43 @@ public class Mimik : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        /*
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_edgeSensorPosition.position + limites[0], _edgeSensorSize);
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_edgeSensorPosition.position + limites[1], _edgeSensorSize);
+        */
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(_enemyAttackHitbox.position, _attackHitbox);
     }
 
-    bool IsGrounded()
+    void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Edge")
+        {
+            Debug.Log("Borde detectado");
+            _isNearEdge = true;
+        }
+        
+    }
 
-        Collider2D[] ground_right = Physics2D.OverlapBoxAll(_edgeSensorPosition.position + limites[0], _edgeSensorSize, 0);
+    /*bool EdgeDetection()
+    {
+        Collider2D[] ground = Physics2D.OverlapBoxAll(_edgeSensorPosition.position, _edgeSensorSize, 0);
 
-        foreach (Collider2D item in ground_right)
+        foreach (Collider2D item in ground)
         {
             if (item.gameObject.layer == 3)
             {
-                //return true;
-                isGrounded_right = true;
+                return true;
             }
             else
             {
                 return false;
             }
+            
         }
 
 
@@ -90,7 +98,8 @@ public class Mimik : MonoBehaviour
             return false;
         }
         
-    }
+        
+    }*/
 
     bool PlayerDetection()
     {
