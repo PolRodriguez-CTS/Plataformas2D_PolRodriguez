@@ -43,6 +43,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxHealth = 10;
     [SerializeField] private float _currentHealth;
 
+    //Daño
+    [SerializeField] private float _playerDamage = 1;
+    [SerializeField] private float _damageMultiplier = 3;
+    [SerializeField] private bool _isRunAttacking = false;
+    [SerializeField] private bool _isIdleAttacking = false;
+
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -93,16 +99,22 @@ public class PlayerController : MonoBehaviour
             Interact();
         }
 
-        if (_attackAction.WasPressedThisFrame())
+        if (_attackAction.WasPressedThisFrame() && !_isRunAttacking)
         {
             Debug.Log("Ataque");
             _animator.SetTrigger("hasAttacked");
             //Attack();
             //Para hacer que el ataque desactive los inputs del jugador, booleana de control que diga si está atacando o no. al llamar la función es true, se inicia una corrutina que tiene quita los inputs, y solo los activa cuando la booleana devuelve false (cuando acaba de atacar)
         }
+        
+        if (_attackAction.WasPressedThisFrame() && _isRunAttacking)
+        {
+            Debug.Log("Ataque corriendo");
+            _animator.SetTrigger("hasAttacked");
+        }
 
         //función que controla cosas como rotación, animaciones, etc del movimiento
-            Movement();
+        Movement();
 
         _animator.SetBool("IsJumping", !IsGrounded());
     }
@@ -119,18 +131,20 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
             _animator.SetBool("IsRunning", true);
-
+            _isRunAttacking = true;
         }
 
         else if (_moveInput.x > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             _animator.SetBool("IsRunning", true);
+            _isRunAttacking = true;
         }
 
         else
         {
             _animator.SetBool("IsRunning", false);
+            _isRunAttacking = false;
         }
     }
 
@@ -168,7 +182,13 @@ public class PlayerController : MonoBehaviour
         {
             if (enemy.gameObject.tag == "Enemy")
             {
-                Destroy(enemy.gameObject);
+                Enemy _enemyScript = enemy.gameObject.GetComponent<Enemy>();
+                _enemyScript.EnemyTakeDamage(_playerDamage);
+
+                if (_isRunAttacking)
+                {
+                    _enemyScript.EnemyTakeDamage(_playerDamage*_damageMultiplier);
+                }
             }
         }
     }

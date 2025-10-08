@@ -10,9 +10,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _enemyAttackHitbox;
     [SerializeField] private Vector2 _attackHitbox = new Vector2(1, 1);
 
+    //vida
+    [SerializeField] private float _enemyMaxHealth = 3;
+    [SerializeField] private float _enemyCurrentHealth;
+
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    void Start()
+    {
+        _enemyCurrentHealth = _enemyMaxHealth;
     }
 
     void Update()
@@ -44,5 +53,16 @@ public class Enemy : MonoBehaviour
             Debug.Log("Borde detectado");
             _mimikDirection *= -1;
         }
+    }
+
+    public void EnemyTakeDamage(float damage)
+    {
+        _enemyCurrentHealth -= damage;
+        Debug.Log(_enemyCurrentHealth);
+        if (_enemyCurrentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+
     }
 }

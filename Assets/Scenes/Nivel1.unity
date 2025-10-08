@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 69669767}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.317, y: -2.824, z: -0.0056960806}
+  m_LocalPosition: {x: -1.15, y: -0.76, z: -0.0056960806}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -882,6 +882,8 @@ MonoBehaviour:
   _mimikDamage: 1
   _enemyAttackHitbox: {fileID: 1838454014}
   _attackHitbox: {x: 1, y: 1}
+  _enemyMaxHealth: 3
+  _enemyCurrentHealth: 0
 --- !u!61 &740233153
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1209,7 +1211,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -13330,6 +13332,9 @@ MonoBehaviour:
   _attackHitboxSize: {x: 1, y: 1}
   _maxHealth: 10
   _currentHealth: 0
+  _playerDamage: 1
+  _damageMultiplier: 3
+  _isRunAttacking: 0
 --- !u!95 &1602093008
 Animator:
   serializedVersion: 7
@@ -13476,7 +13481,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
