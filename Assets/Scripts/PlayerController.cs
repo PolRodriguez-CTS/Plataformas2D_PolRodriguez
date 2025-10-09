@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
-        if (_interactAction.WasPerformedThisFrame())
+        if (_interactAction.WasPressedThisFrame())
         {
             Interact();
         }
@@ -169,7 +169,15 @@ public class PlayerController : MonoBehaviour
                 //para comprobar que se ha accedido correctamente (que la variable sea diferente de nulo) y evitar que en el caso que no, no se ejecuten las lineas posteriores
                 if (starScript != null)
                 {
-                    starScript.Interaction();
+                    starScript.StarInteraction();
+                }
+            }
+            if (item.gameObject.tag == "Coins")
+            {
+                Coin coinScript = item.gameObject.GetComponent<Coin>();
+                if (coinScript != null)
+                {
+                    coinScript.CoinInteraction();
                 }
             }
         }

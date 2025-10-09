@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public InputActionAsset playerInputs;
     private InputAction _pauseInput;
     int _stars = 0;
+    int _coins = 0;
     
 
     void Awake()
@@ -46,6 +47,12 @@ public class GameManager : MonoBehaviour
     {
         _stars++;
         Debug.Log("Estrellas recogidas = " + _stars);
+    }
+
+    public void AddCoin()
+    {
+        _coins++;
+        Debug.Log("Monedas recogidas = " + _coins);
     }
 
     public void Pause()

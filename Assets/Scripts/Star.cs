@@ -9,7 +9,7 @@ public class Star : MonoBehaviour
         //_gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    public void Interaction()
+    public void StarInteraction()
     {
         //_gameManager.AddStar();
         AudioManager.instance.ReproduceSound(AudioManager.instance._starSFX);
