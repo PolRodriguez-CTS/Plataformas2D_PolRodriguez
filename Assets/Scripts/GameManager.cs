@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
     public bool _isPaused = false;
     public InputActionAsset playerInputs;
     private InputAction _pauseInput;
-    int _stars = 0;
-    int _coins = 0;
+    public int _stars = 0;
+    public int _coins = 0;
     
 
     void Awake()
@@ -46,12 +46,14 @@ public class GameManager : MonoBehaviour
     public void AddStar()
     {
         _stars++;
+        GUIManager.Instance.UpdateStarsText();
         Debug.Log("Estrellas recogidas = " + _stars);
     }
 
     public void AddCoin()
     {
         _coins++;
+        GUIManager.Instance.UpdateCoinsText();
         Debug.Log("Monedas recogidas = " + _coins);
     }
 

@@ -6,6 +6,8 @@ public class GUIManager : MonoBehaviour
     public GameObject _pauseCanvas;
     public GameObject _optionsCanvas;
     [SerializeField] private Image _healthBar;
+    [SerializeField] private Text _starText;
+    [SerializeField] private Text _coinText;
 
     void Awake()
     {
@@ -38,5 +40,15 @@ public class GUIManager : MonoBehaviour
     public void UpdateHealthBar(float _currentHealth, float _maxHealth)
     {
         _healthBar.fillAmount = _currentHealth / _maxHealth;
+    }
+
+    public void UpdateStarsText()
+    {
+        _starText.text = "x" + GameManager.instance._stars.ToString();
+    }
+
+    public void UpdateCoinsText()
+    {
+        _coinText.text = "x" + GameManager.instance._coins.ToString();
     }
 }

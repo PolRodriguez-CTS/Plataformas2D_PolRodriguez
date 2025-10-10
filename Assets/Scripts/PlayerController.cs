@@ -172,9 +172,10 @@ public class PlayerController : MonoBehaviour
                     starScript.StarInteraction();
                 }
             }
-            if (item.gameObject.tag == "Coins")
+            if (item.gameObject.tag == "Coin")
             {
                 Coin coinScript = item.gameObject.GetComponent<Coin>();
+            
                 if (coinScript != null)
                 {
                     coinScript.CoinInteraction();

@@ -9,7 +9,6 @@ public class Coin : MonoBehaviour
 
     public void CoinInteraction()
     {
-        
         GameManager.instance.AddCoin();
         Destroy(gameObject);
     }
