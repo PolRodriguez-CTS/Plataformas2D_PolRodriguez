@@ -5,6 +5,7 @@ public class GUIManager : MonoBehaviour
     public static GUIManager Instance;
     public GameObject _pauseCanvas;
     public GameObject _optionsCanvas;
+    public GameObject _victoryCanvas;
     [SerializeField] private Image _healthBar;
     [SerializeField] private Text _starText;
     [SerializeField] private Text _coinText;

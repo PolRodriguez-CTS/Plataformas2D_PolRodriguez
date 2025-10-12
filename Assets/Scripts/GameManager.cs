@@ -76,5 +76,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void Victory()
+    {
+        GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._victoryCanvas, true);
+    }
+
     
 }

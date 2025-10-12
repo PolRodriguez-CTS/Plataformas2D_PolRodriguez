@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _damageMultiplier = 3;
     [SerializeField] private bool _isRunAttacking = false;
     [SerializeField] private bool _isIdleAttacking = false;
+    
 
     void Awake()
     {
