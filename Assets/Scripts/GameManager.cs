@@ -41,6 +41,15 @@ public class GameManager : MonoBehaviour
         {
             Pause();
         }
+
+        if (StarSensor.instance.StarsRemaining())
+        {
+            Debug.Log("Aún quedan estrellas");
+        }
+        else if(!StarSensor.instance.StarsRemaining())
+        {
+            Victory();
+        }
     }
 
     public void AddStar()
