@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections;
 using Unity.Mathematics;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveInput;
     [SerializeField] private float _playerSpeed = 4.5f;
     [SerializeField] private float _jumpHeight = 2;
+    [SerializeField] private float _runAttackDash = 5;
 
     //private bool _alreadyLanded = true;
 
@@ -73,6 +76,27 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (_attackAction.WasPressedThisFrame() && !_isRunAttacking)
+        {
+            _isIdleAttacking = true;
+            StartCoroutine(InputCooldown());
+            Debug.Log("Ataque");
+            _animator.SetTrigger("hasAttacked");
+            
+            //Attack();
+            //Para hacer que el ataque desactive los inputs del jugador, booleana de control que diga si está atacando o no. al llamar la función es true, se inicia una corrutina que tiene quita los inputs, y solo los activa cuando la booleana devuelve false (cuando acaba de atacar)
+        }
+        
+        if (_attackAction.WasPressedThisFrame() && _isRunAttacking)
+        {
+            Debug.Log("Ataque corriendo");
+            _animator.SetTrigger("hasAttacked");
+        }
+
+        if(_isIdleAttacking)
+        {
+            return;
+        }
         /*if (_playerHealth == 0)
         {
             Destroy(gameObject);
@@ -98,20 +122,6 @@ public class PlayerController : MonoBehaviour
         if (_interactAction.WasPressedThisFrame())
         {
             Interact();
-        }
-
-        if (_attackAction.WasPressedThisFrame() && !_isRunAttacking)
-        {
-            Debug.Log("Ataque");
-            _animator.SetTrigger("hasAttacked");
-            //Attack();
-            //Para hacer que el ataque desactive los inputs del jugador, booleana de control que diga si está atacando o no. al llamar la función es true, se inicia una corrutina que tiene quita los inputs, y solo los activa cuando la booleana devuelve false (cuando acaba de atacar)
-        }
-        
-        if (_attackAction.WasPressedThisFrame() && _isRunAttacking)
-        {
-            Debug.Log("Ataque corriendo");
-            _animator.SetTrigger("hasAttacked");
         }
 
         //función que controla cosas como rotación, animaciones, etc del movimiento
@@ -197,10 +207,16 @@ public class PlayerController : MonoBehaviour
 
                 if (_isRunAttacking)
                 {
-                    _enemyScript.EnemyTakeDamage(_playerDamage*_damageMultiplier);
+                    _enemyScript.EnemyTakeDamage(_playerDamage * _damageMultiplier);
                 }
             }
         }
+    }
+    
+    IEnumerator InputCooldown(float cooldown = 0.25f)
+    {
+        yield return new WaitForSeconds(cooldown);
+        _isIdleAttacking = false;
     }
 
     //ground sensor pero BIEN

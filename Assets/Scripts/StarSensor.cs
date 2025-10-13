@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -27,8 +28,8 @@ public class StarSensor : MonoBehaviour
         // esto hace que cuando cambies de escena no se destruya
         DontDestroyOnLoad(gameObject);
     }
-    
-    public bool StarsRemaining()
+
+    /*public bool StarsRemaining()
     {
         Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0);
         foreach (Collider2D item in stars)
@@ -44,5 +45,20 @@ public class StarSensor : MonoBehaviour
             }
         }
         return false;
+    }*/
+
+
+    //stars in level se asigna en el start a las estrellas que detecta el sensor, en el gamemanager. También asignamos que cada vez que recojamos una estrella se resta 1 a starsinlevel
+    int starsInLevel;
+
+    void Start()
+    {
+        starsInLevel = StarsRemaining();
+    }
+
+    public int StarsRemaining()
+    {
+        Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0);
+        return stars.Length;        
     }
 }

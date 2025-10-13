@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private InputAction _pauseInput;
     public int _stars = 0;
     public int _coins = 0;
+
+    //estrellas
+
     
 
     void Awake()
@@ -42,14 +45,14 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        if (StarSensor.instance.StarsRemaining())
+        /*if (StarSensor.instance.StarsRemaining())
         {
             Debug.Log("Aún quedan estrellas");
         }
         else if(!StarSensor.instance.StarsRemaining())
         {
-            Victory();
-        }
+            //Victory();
+        }*/
     }
 
     public void AddStar()
