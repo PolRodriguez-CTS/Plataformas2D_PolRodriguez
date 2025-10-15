@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public int _stars = 0;
     public int _coins = 0;
 
-    private int starsInlevel;
+    //private int starsInlevel;
     //private StarSensor _starSensor;
 
     //estrellas
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //starsInLevel = StarSensor.instance.StarsRemaining();
-        starsInlevel = StarSensor.instance.StarsRemaining();
+        //starsInlevel = StarSensor.instance.StarsRemaining();
     }
 
     void Update()
@@ -55,12 +55,17 @@ public class GameManager : MonoBehaviour
         {
             Pause();
         }
+        
+        if(StarSensor.instance.StarsRemaining() == 0)
+        {
+            Victory();
+        }
 
-        if (starsInlevel == 0)
+        /*if (starsInlevel == 0)
         {
             Debug.Log("has ganado");
             Victory();
-        }
+        }*/
     }
 
     public void AddStar()
@@ -68,7 +73,7 @@ public class GameManager : MonoBehaviour
         _stars++;
         GUIManager.Instance.UpdateStarsText();
         //Debug.Log("Estrellas recogidas = " + _stars);
-        starsInlevel--;
+        //starsInlevel--;
     }
 
     public void AddCoin()
@@ -100,6 +105,7 @@ public class GameManager : MonoBehaviour
     public void Victory()
     {
         GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._victoryCanvas, true);
+
     }
 
     
