@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
             _mimikDirection *= -1;
             if (collision.gameObject.tag == "Player")
             {
-                Debug.Log("te muerdo");
+                //Debug.Log("te muerdo");
                 PlayerController _playerScript = collision.gameObject.GetComponent<PlayerController>();
                 _playerScript.TakeDamage(_mimikDamage);
             }
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
         if (collision.gameObject.tag == "Edge")
         {
-            Debug.Log("Borde detectado");
+            //Debug.Log("Borde detectado");
             _mimikDirection *= -1;
         }
     }
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
     public void EnemyTakeDamage(float damage)
     {
         _enemyCurrentHealth -= damage;
-        Debug.Log(_enemyCurrentHealth);
+        //Debug.Log(_enemyCurrentHealth);
         if (_enemyCurrentHealth <= 0)
         {
             Destroy(gameObject);

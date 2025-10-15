@@ -50,7 +50,7 @@ public class Mimik : MonoBehaviour
     {
         if (collision.gameObject.tag == "Edge")
         {
-            Debug.Log("Borde detectado");
+            //Debug.Log("Borde detectado");
             _isNearEdge = true;
         }
         

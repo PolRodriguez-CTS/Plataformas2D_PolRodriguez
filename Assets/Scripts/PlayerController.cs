@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveInput;
     [SerializeField] private float _playerSpeed = 4.5f;
     [SerializeField] private float _jumpHeight = 2;
-    [SerializeField] private float _runAttackDash = 5;
+    //[SerializeField] private float _runAttackDash = 5;
 
     //private bool _alreadyLanded = true;
 
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         {
             _isIdleAttacking = true;
             StartCoroutine(InputCooldown());
-            Debug.Log("Ataque");
+            //Debug.Log("Ataque");
             _animator.SetTrigger("hasAttacked");
             
             //Attack();
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         
         if (_attackAction.WasPressedThisFrame() && _isRunAttacking)
         {
-            Debug.Log("Ataque corriendo");
+            //Debug.Log("Ataque corriendo");
             _animator.SetTrigger("hasAttacked");
         }
 
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
     {
         _currentHealth -= damage;
         float health = _currentHealth / _maxHealth;
-        Debug.Log(health);
+        //Debug.Log(health);
 
         GUIManager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
         if (_currentHealth <= 0)

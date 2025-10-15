@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public int _stars = 0;
     public int _coins = 0;
 
+    private int starsInlevel;
+    //private StarSensor _starSensor;
+
     //estrellas
 
     
@@ -35,7 +38,15 @@ public class GameManager : MonoBehaviour
         // esto hace que cuando cambies de escena no se destruya
         DontDestroyOnLoad(gameObject);
 
+        //_starSensor = GameObject.Find("StarSensor").GetComponent<StarSensor>();
+
         _pauseInput = InputSystem.actions["Pause"];
+    }
+
+    void Start()
+    {
+        //starsInLevel = StarSensor.instance.StarsRemaining();
+        starsInlevel = StarSensor.instance.StarsRemaining();
     }
 
     void Update()
@@ -45,28 +56,26 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        /*if (StarSensor.instance.StarsRemaining())
+        if (starsInlevel == 0)
         {
-            Debug.Log("Aún quedan estrellas");
+            Debug.Log("has ganado");
+            Victory();
         }
-        else if(!StarSensor.instance.StarsRemaining())
-        {
-            //Victory();
-        }*/
     }
 
     public void AddStar()
     {
         _stars++;
         GUIManager.Instance.UpdateStarsText();
-        Debug.Log("Estrellas recogidas = " + _stars);
+        //Debug.Log("Estrellas recogidas = " + _stars);
+        starsInlevel--;
     }
 
     public void AddCoin()
     {
         _coins++;
         GUIManager.Instance.UpdateCoinsText();
-        Debug.Log("Monedas recogidas = " + _coins);
+        //Debug.Log("Monedas recogidas = " + _coins);
     }
 
     public void Pause()

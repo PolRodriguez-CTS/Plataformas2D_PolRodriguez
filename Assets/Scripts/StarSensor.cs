@@ -10,6 +10,8 @@ public class StarSensor : MonoBehaviour
     [SerializeField] private Transform _starSensor;
     [SerializeField] private Vector2 _starSensorArea = new Vector2(115, 30);
 
+    [SerializeField] private LayerMask _starMask;
+
     void Awake()
     {
         //busca si instance esta rellenado, si ya esta relleno comprueba si lo que está dentro es este objeto u otro
@@ -29,36 +31,23 @@ public class StarSensor : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    /*public bool StarsRemaining()
-    {
-        Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0);
-        foreach (Collider2D item in stars)
-        {
-            if (item.gameObject.tag == "Star")
-            {
-                return true;
-            }
-
-            else
-            {
-                return false;
-            }
-        }
-        return false;
-    }*/
-
-
     //stars in level se asigna en el start a las estrellas que detecta el sensor, en el gamemanager. También asignamos que cada vez que recojamos una estrella se resta 1 a starsinlevel
-    int starsInLevel;
+    //int starsInLevel;
 
-    void Start()
+    /*void Start()
     {
         starsInLevel = StarsRemaining();
+    }*/
+
+    void Update()
+    {
+        StarsRemaining();
     }
 
     public int StarsRemaining()
     {
-        Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0);
-        return stars.Length;        
+        Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, _starMask);
+        Debug.Log("Quedan" + stars.Length);
+        return stars.Length;
     }
 }
