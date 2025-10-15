@@ -279,6 +279,8 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
+        GameManager.instance.playerInputs.FindActionMap("Player");
+        _animator.SetTrigger("IsDead");
         Debug.Log("Muerto");
     }
 }

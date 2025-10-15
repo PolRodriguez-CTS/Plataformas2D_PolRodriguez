@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int _stars = 0;
     public int _coins = 0;
 
+    private bool hasWon = false;
+
     //private int starsInlevel;
     //private StarSensor _starSensor;
 
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (_pauseInput.WasPressedThisFrame())
+        if (_pauseInput.WasPressedThisFrame() && !hasWon)
         {
             Pause();
         }
@@ -104,8 +106,10 @@ public class GameManager : MonoBehaviour
 
     public void Victory()
     {
+        Time.timeScale = 0;
         GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._victoryCanvas, true);
-
+        playerInputs.FindActionMap("Player").Disable();
+        hasWon = true;
     }
 
     

@@ -33,7 +33,7 @@ public class StarSensor : MonoBehaviour
 
     void Start()
     {
-        starsInLevel = StarsRemaining();
+        //starsInLevel = StarsRemaining();
     }
 
     //stars in level se asigna en el start a las estrellas que detecta el sensor, en el gamemanager. También asignamos que cada vez que recojamos una estrella se resta 1 a starsinlevel
@@ -47,8 +47,7 @@ public class StarSensor : MonoBehaviour
     void Update()
     {
         //StarsRemaining();
-        Debug.Log("Hay " + starsInLevel + "en la escena");
-        Debug.Log("StarsRemaining" + StarsRemaining());
+        Debug.Log("StarsRemaining " + StarsRemaining());
     }
 
     public int StarsRemaining()
