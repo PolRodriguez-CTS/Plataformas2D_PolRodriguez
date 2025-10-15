@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour
         {
             Pause();
         }
-        
+
+        //Cambiar la condición, que se compruebe fuera del update que si no se lia por rendimiento
         if(StarSensor.instance.StarsRemaining() == 0)
         {
             Victory();
