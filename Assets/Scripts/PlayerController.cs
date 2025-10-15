@@ -266,6 +266,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+
         _currentHealth -= damage;
         float health = _currentHealth / _maxHealth;
         //Debug.Log(health);
@@ -276,6 +277,15 @@ public class PlayerController : MonoBehaviour
             Death();
         }
     }
+
+    public void Heal(float lifeHeal)
+    {
+        _currentHealth += lifeHeal;
+        float health = _currentHealth / _maxHealth;
+
+        GUIManager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
+    }
+
 
     void Death()
     {

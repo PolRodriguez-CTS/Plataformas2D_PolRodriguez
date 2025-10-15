@@ -7,10 +7,10 @@ public class StarSensor : MonoBehaviour
 
     public static StarSensor instance { get; private set; }
     //Sensor de estrellas
-    [SerializeField] private Transform _starSensor;
-    [SerializeField] private Vector2 _starSensorArea = new Vector2(115, 30);
-    [SerializeField] private int starsInLevel;
-    [SerializeField] private LayerMask _starMask;
+    //[SerializeField] private Transform _starSensor;
+    //[SerializeField] private Vector2 _starSensorArea = new Vector2(115, 30);
+    //[SerializeField] private int starsInLevel;
+    //[SerializeField] private LayerMask _starMask;
 
     void Awake()
     {
@@ -52,7 +52,9 @@ public class StarSensor : MonoBehaviour
 
     public int StarsRemaining()
     {
-        Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0, _starMask);
+        //Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0, _starMask);
+
+        GameObject[] stars = GameObject.FindGameObjectsWithTag("Star"); 
         return stars.Length;
     }
 }
