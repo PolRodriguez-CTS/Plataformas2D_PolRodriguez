@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     private bool hasWon = false;
 
-    //private int starsInlevel;
+    private int starsInlevel;
     //private StarSensor _starSensor;
 
     //estrellas
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //starsInLevel = StarSensor.instance.StarsRemaining();
-        //starsInlevel = StarSensor.instance.StarsRemaining();
+        starsInlevel = StarsRemaining();
     }
 
     void Update()
@@ -59,31 +59,35 @@ public class GameManager : MonoBehaviour
         }
 
         //Cambiar la condición, que se compruebe fuera del update que si no se lia por rendimiento
-        if(StarSensor.instance.StarsRemaining() == 0)
+        /*if(StarSensor.instance.StarsRemaining() == 0)
         {
-            Victory();
-        }
-
-        /*if (starsInlevel == 0)
-        {
-            Debug.Log("has ganado");
             Victory();
         }*/
+    }
+
+    public int StarsRemaining()
+    {
+        //Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0, _starMask);
+
+        GameObject[] stars = GameObject.FindGameObjectsWithTag("Star"); 
+        return stars.Length;
     }
 
     public void AddStar()
     {
         _stars++;
+        starsInlevel--;
         GUIManager.Instance.UpdateStarsText();
-        //Debug.Log("Estrellas recogidas = " + _stars);
-        //starsInlevel--;
+        if(starsInlevel == 0)
+        {
+            Victory();
+        }
     }
 
     public void AddCoin()
     {
         _coins++;
         GUIManager.Instance.UpdateCoinsText();
-        //Debug.Log("Monedas recogidas = " + _coins);
     }
 
     public void Pause()

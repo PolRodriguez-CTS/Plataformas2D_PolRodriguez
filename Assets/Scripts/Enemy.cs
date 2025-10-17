@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireCube(_enemyAttackHitbox.position, _attackHitbox);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.layer == 3)
         {
@@ -54,6 +54,25 @@ public class Enemy : MonoBehaviour
             _mimikDirection *= -1;
         }
     }
+    /*void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player" || collision.gameObject.layer == 3)
+        {
+            _mimikDirection *= -1;
+            if (collision.gameObject.tag == "Player")
+            {
+                //Debug.Log("te muerdo");
+                PlayerController _playerScript = collision.gameObject.GetComponent<PlayerController>();
+                _playerScript.TakeDamage(_mimikDamage);
+            }
+        }
+
+        if (collision.gameObject.tag == "Edge")
+        {
+            //Debug.Log("Borde detectado");
+            _mimikDirection *= -1;
+        }
+    }*/
 
     public void EnemyTakeDamage(float damage)
     {

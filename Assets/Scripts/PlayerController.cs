@@ -5,6 +5,9 @@ using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -183,7 +186,7 @@ public class PlayerController : MonoBehaviour
                     starScript.StarInteraction();
                 }
             }
-            if (item.gameObject.tag == "Coin")
+            /*if (item.gameObject.tag == "Coin")
             {
                 Coin coinScript = item.gameObject.GetComponent<Coin>();
             
@@ -191,7 +194,7 @@ public class PlayerController : MonoBehaviour
                 {
                     coinScript.CoinInteraction();
                 }
-            }
+            }*/
         }
     }
 
@@ -219,15 +222,12 @@ public class PlayerController : MonoBehaviour
         _isIdleAttacking = false;
     }
 
-    //ground sensor pero BIEN
+
     bool IsGrounded()
     {
-        //el valor devuelve un array de objetos así que la variable debe ser de tipo array
         Collider2D[] ground = Physics2D.OverlapBoxAll(_sensorPosition.position, _sensorSize, 0);
-        //el array almacena los objetos que entren en este collider
 
         foreach (Collider2D item in ground)
-        //item es nombre de variable, puede ser cualquiera
         {
             if (item.gameObject.layer == 3)
             {
@@ -237,7 +237,6 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    //para dibujar el collider que creamos en IsGrounded
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -250,26 +249,11 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(_attackPosition.position, _attackHitboxSize);
     }
 
-
-
-    //_____________Por hacer 2º entrega, animacion de ataque quieto y ataque en movimiento, para el ataque estático hacer que no pueda moverse.________________________________
-    //Interacciones con el enemigo
-
-    /*void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            Mimik _mimikScript = FindWithTag("Enemy");
-            _playerHealth -= 
-        }
-    }*/
-
     public void TakeDamage(float damage)
     {
 
         _currentHealth -= damage;
         float health = _currentHealth / _maxHealth;
-        //Debug.Log(health);
 
         GUIManager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
         if (_currentHealth <= 0)
@@ -281,6 +265,12 @@ public class PlayerController : MonoBehaviour
     public void Heal(float lifeHeal)
     {
         _currentHealth += lifeHeal;
+        
+        if (_currentHealth + lifeHeal > _maxHealth)
+        {
+            _currentHealth = _maxHealth;
+        }
+        
         float health = _currentHealth / _maxHealth;
 
         GUIManager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
@@ -289,8 +279,15 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
-        GameManager.instance.playerInputs.FindActionMap("Player");
+        GameManager.instance.playerInputs.FindActionMap("Player").Disable();
         _animator.SetTrigger("IsDead");
+        StartCoroutine(DeathScreenDelay());
         Debug.Log("Muerto");
+    }
+
+    IEnumerator DeathScreenDelay()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("Game Over");
     }
 }
