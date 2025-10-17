@@ -18,6 +18,7 @@ public class Coin : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            AudioManager.instance.ReproduceSound(AudioManager.instance._coinSFX);
             GameManager.instance.AddCoin();
             Destroy(gameObject);
         }

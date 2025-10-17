@@ -9,6 +9,7 @@ public class Heart : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            AudioManager.instance.ReproduceSound(AudioManager.instance._heartSFX);
             PlayerController _playerScript = collision.gameObject.GetComponent<PlayerController>();
             _playerScript.Heal(_heartHealPoints);
             Destroy(gameObject);

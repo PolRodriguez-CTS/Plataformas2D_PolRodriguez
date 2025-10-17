@@ -6,10 +6,18 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource _bgmSource;
     [SerializeField] private AudioSource _sfxSource;
+    //SFX
     public AudioClip _starSFX;
     public AudioClip _coinSFX;
+    public AudioClip _heartSFX;
+    public AudioClip _jumpSFX;
+    public AudioClip _attackSFX;
+    public AudioClip _dashAttackSFX;
+    public AudioClip _hurtSFX;
+    public AudioClip _deathSFX;
+    public AudioClip _mimikSFX;
+    //BGM
     public AudioClip menuBGM;
-    
     void Awake()
     {
         if(instance != null && instance != this)

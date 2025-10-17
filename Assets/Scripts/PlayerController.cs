@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _damageMultiplier = 3;
     [SerializeField] private bool _isRunAttacking = false;
     [SerializeField] private bool _isIdleAttacking = false;
+
+    private bool _isDying = false;
     
 
     void Awake()
@@ -81,6 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_attackAction.WasPressedThisFrame() && !_isRunAttacking)
         {
+            AudioManager.instance.ReproduceSound(AudioManager.instance._attackSFX);
             _isIdleAttacking = true;
             StartCoroutine(InputCooldown());
             //Debug.Log("Ataque");
@@ -92,6 +95,7 @@ public class PlayerController : MonoBehaviour
         
         if (_attackAction.WasPressedThisFrame() && _isRunAttacking)
         {
+            AudioManager.instance.ReproduceSound(AudioManager.instance._dashAttackSFX);
             //Debug.Log("Ataque corriendo");
             _animator.SetTrigger("hasAttacked");
         }
@@ -164,6 +168,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        AudioManager.instance.ReproduceSound(AudioManager.instance._jumpSFX);
         _rigidbody.AddForce(Vector2.up * Mathf.Sqrt(_jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
         //--> formula del mathf =(altura de salto * -2 * gravedad)
         //--> forma sencilla = _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse); siendo jump force la fuerza de salto designada (variable)
@@ -251,12 +256,15 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-
+        if(_currentHealth > 0)
+        {
+            AudioManager.instance.ReproduceSound(AudioManager.instance._hurtSFX);
+        }
         _currentHealth -= damage;
         float health = _currentHealth / _maxHealth;
 
         GUIManager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
-        if (_currentHealth <= 0)
+        if (_currentHealth <= 0 && !_isDying)
         {
             Death();
         }
@@ -279,15 +287,17 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
+        _isDying = true;
+        StartCoroutine(DeathScreenDelay());
+        AudioManager.instance.ReproduceSound(AudioManager.instance._deathSFX);
         GameManager.instance.playerInputs.FindActionMap("Player").Disable();
         _animator.SetTrigger("IsDead");
-        StartCoroutine(DeathScreenDelay());
-        Debug.Log("Muerto");
     }
 
     IEnumerator DeathScreenDelay()
     {
-        yield return new WaitForSeconds(1);
+        float seconds = 0.75f;
+        yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene("Game Over");
     }
 }
