@@ -296,8 +296,9 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DeathScreenDelay()
     {
-        float seconds = 0.75f;
+        float seconds = 1;
         yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene("Game Over");
+        AudioManager.instance.ChangeBGM(AudioManager.instance.gameOverBGM);
     }
 }

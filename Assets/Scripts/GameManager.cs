@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.instance.ChangeBGM(AudioManager.instance.level1BGM);
         //starsInLevel = StarSensor.instance.StarsRemaining();
         starsInlevel = StarsRemaining();
     }
@@ -116,6 +118,15 @@ public class GameManager : MonoBehaviour
         playerInputs.FindActionMap("Player").Disable();
         hasWon = true;
     }
+
+    /*public void IsInMenu()
+    {
+        if(SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            AudioManager.instance.ChangeBGM(AudioManager.instance.menuBGM);
+        }
+        
+    }*/
 
     
 }

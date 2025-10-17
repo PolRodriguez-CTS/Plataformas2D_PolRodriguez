@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -18,9 +19,12 @@ public class AudioManager : MonoBehaviour
     public AudioClip _mimikSFX;
     //BGM
     public AudioClip menuBGM;
+    public AudioClip level1BGM;
+    public AudioClip gameOverBGM;
+
     void Awake()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
@@ -28,6 +32,7 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     public void ReproduceSound(AudioClip clip)
@@ -37,10 +42,18 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeBGM(AudioClip bgmClip)
     {
+        _bgmSource.Stop();
         _bgmSource.clip = bgmClip;
         _bgmSource.Play();
     }
 
+    public void IsInMenu()
+    {
+        if(SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            ChangeBGM(menuBGM);
+        }
+    }
     
     
     /*public void StarSFX()
