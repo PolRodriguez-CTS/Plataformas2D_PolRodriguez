@@ -28,6 +28,10 @@ public class SceneLoader : MonoBehaviour
     }
     public void ChangeScene(string sceneName)
     {
+        GameManager.instance._stars = 0;
+        GameManager.instance._coins = 0;
+        //AudioManager.instance.ChangeBGM();
+        IsInMenu();
         StartCoroutine(LoadNewScene(sceneName));
     }
 
@@ -64,7 +68,15 @@ public class SceneLoader : MonoBehaviour
         Time.timeScale = 1;
         GameManager.instance.playerInputs.FindActionMap("Player").Enable();
         GameManager.instance._isPaused = false;
-        
+
         _loadingCanvas.SetActive(false);
+    }
+    
+    public void IsInMenu()
+    {
+        if(SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            AudioManager.instance.ChangeBGM(AudioManager.instance.menuBGM);
+        }
     }
 }

@@ -50,7 +50,8 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.instance.ChangeBGM(AudioManager.instance.level1BGM);
         //starsInLevel = StarSensor.instance.StarsRemaining();
-        starsInlevel = StarsRemaining();
+        GameObject[] stars = GameObject.FindGameObjectsWithTag("Star"); 
+        starsInlevel = stars.Length;
     }
 
     void Update()
@@ -67,13 +68,12 @@ public class GameManager : MonoBehaviour
         }*/
     }
 
-    public int StarsRemaining()
+    /*public int StarsRemaining()
     {
         //Collider2D[] stars = Physics2D.OverlapBoxAll(_starSensor.position, _starSensorArea, 0, _starMask);
 
-        GameObject[] stars = GameObject.FindGameObjectsWithTag("Star"); 
-        return stars.Length;
-    }
+        
+    }*/
 
     public void AddStar()
     {

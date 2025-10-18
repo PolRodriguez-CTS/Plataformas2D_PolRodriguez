@@ -42,18 +42,23 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeBGM(AudioClip bgmClip)
     {
-        _bgmSource.Stop();
+        
         _bgmSource.clip = bgmClip;
         _bgmSource.Play();
     }
 
-    public void IsInMenu()
+    public void StopBGM()
+    {
+        _bgmSource.Stop();
+    }
+
+    /*public void IsInMenu()
     {
         if(SceneManager.GetActiveScene().name == "Main Menu")
         {
             ChangeBGM(menuBGM);
         }
-    }
+    }*/
     
     
     /*public void StarSFX()

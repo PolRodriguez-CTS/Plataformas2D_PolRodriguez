@@ -285,7 +285,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Death()
+    public void Death()
     {
         _isDying = true;
         StartCoroutine(DeathScreenDelay());
