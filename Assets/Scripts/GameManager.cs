@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         AudioManager.instance.ChangeBGM(AudioManager.instance.level1BGM);
-        //starsInLevel = StarSensor.instance.StarsRemaining();
         GameObject[] stars = GameObject.FindGameObjectsWithTag("Star"); 
         starsInlevel = stars.Length;
     }
@@ -99,6 +98,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
             GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._pauseCanvas, false);
             playerInputs.FindActionMap("Player").Enable();
+            AudioManager.instance.ResumeBGM();
             _isPaused = false;
         }
         else
@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
             GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._pauseCanvas, true);
             GUIManager.Instance.ChangeCanvasStatus(GUIManager.Instance._optionsCanvas, false);
             playerInputs.FindActionMap("Player").Disable();
+            AudioManager.instance.PauseBGM();
             _isPaused = true;
         }
     }

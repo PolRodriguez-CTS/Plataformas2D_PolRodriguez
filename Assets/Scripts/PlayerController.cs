@@ -227,7 +227,6 @@ public class PlayerController : MonoBehaviour
         _isIdleAttacking = false;
     }
 
-
     bool IsGrounded()
     {
         Collider2D[] ground = Physics2D.OverlapBoxAll(_sensorPosition.position, _sensorSize, 0);
@@ -284,9 +283,9 @@ public class PlayerController : MonoBehaviour
         GUIManager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
     }
 
-
     public void Death()
     {
+        AudioManager.instance.StopBGM();
         _isDying = true;
         StartCoroutine(DeathScreenDelay());
         AudioManager.instance.ReproduceSound(AudioManager.instance._deathSFX);
@@ -298,7 +297,7 @@ public class PlayerController : MonoBehaviour
     {
         float seconds = 1;
         yield return new WaitForSeconds(seconds);
-        SceneManager.LoadScene("Game Over");
-        AudioManager.instance.ChangeBGM(AudioManager.instance.gameOverBGM);
+        SceneLoader.instance.ChangeScene("Game Over");
+        //AudioManager.instance.ChangeBGM(AudioManager.instance.gameOverBGM);
     }
 }

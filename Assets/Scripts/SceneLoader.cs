@@ -28,17 +28,17 @@ public class SceneLoader : MonoBehaviour
     }
     public void ChangeScene(string sceneName)
     {
+        AudioManager.instance.StopBGM();
         GameManager.instance._stars = 0;
         GameManager.instance._coins = 0;
-        //AudioManager.instance.ChangeBGM();
-        IsInMenu();
         StartCoroutine(LoadNewScene(sceneName));
     }
 
     IEnumerator LoadNewScene(string sceneName)
     {
+        
         yield return null; //con esto se pausa una corutina, una corutina tiene que tener el yield return siempre
-
+        
         _loadingCanvas.SetActive(true);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
@@ -70,13 +70,27 @@ public class SceneLoader : MonoBehaviour
         GameManager.instance._isPaused = false;
 
         _loadingCanvas.SetActive(false);
+        
+        
+        SceneBGM();
     }
     
-    public void IsInMenu()
+    public void SceneBGM()
     {
-        if(SceneManager.GetActiveScene().name == "Main Menu")
+        if (SceneManager.GetActiveScene().name == "Main Menu")
         {
+            AudioManager.instance.StopBGM();
             AudioManager.instance.ChangeBGM(AudioManager.instance.menuBGM);
+        }
+        else if (SceneManager.GetActiveScene().name == "Nivel1")
+        {
+            AudioManager.instance.StopBGM();
+            AudioManager.instance.ChangeBGM(AudioManager.instance.level1BGM);
+        }
+        else if(SceneManager.GetActiveScene().name == "Game Over")
+        {
+            AudioManager.instance.StopBGM();
+            AudioManager.instance.ChangeBGM(AudioManager.instance._deathSFX);
         }
     }
 }

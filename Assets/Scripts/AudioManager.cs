@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip _hurtSFX;
     public AudioClip _deathSFX;
     public AudioClip _mimikSFX;
+    
     //BGM
     public AudioClip menuBGM;
     public AudioClip level1BGM;
@@ -42,7 +43,6 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeBGM(AudioClip bgmClip)
     {
-        
         _bgmSource.clip = bgmClip;
         _bgmSource.Play();
     }
@@ -51,6 +51,18 @@ public class AudioManager : MonoBehaviour
     {
         _bgmSource.Stop();
     }
+
+    public void PauseBGM()
+    {
+        _bgmSource.Pause();
+    }
+
+    public void ResumeBGM()
+    {
+        _bgmSource.Play();
+    }
+
+    
 
     /*public void IsInMenu()
     {
